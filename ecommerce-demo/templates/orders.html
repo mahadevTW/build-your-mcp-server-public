@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}My Orders — ShopDemo{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">My Orders</h1>
+    {% if orders %}
+    <p class="page-subtitle">{{ orders|length }} order(s) placed</p>
+    {% endif %}
+</div>
+
+{% if orders %}
+<div class="orders-list">
+    {% for order in orders %}
+    <div class="order-card">
+        <div class="order-card-left">
+            <div class="order-id-badge">#{{ order.id }}</div>
+            <div class="order-meta">
+                <span class="order-payment">{{ order.payment_mode }}</span>
+                <span class="order-status-badge">Confirmed</span>
+            </div>
+        </div>
+        <div class="order-amount">
+            <span class="order-label">Total</span>
+            <span class="order-total">₹{{ "%.2f"|format(order.total_amount) }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h2>No orders yet</h2>
+    <p>Place your first order to see it here.</p>
+    <a href="/" class="btn btn-primary btn-large">Start Shopping</a>
+</div>
+{% endif %}
+{% endblock %}

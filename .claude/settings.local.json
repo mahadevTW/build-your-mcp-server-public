@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m venv .venv)",
+      "Bash(source .venv/bin/activate)",
+      "Bash(pip install:*)",
+      "Bash(python3 -m venv .venv)",
+      "Bash(.venv/bin/pip install:*)",
+      "Bash(curl -s http://localhost:8001/api/items)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f''''Total items: {len\\(d\\)}''''\\); [print\\(i\\) for i in d[:3]]\")",
+      "Bash(curl -s http://localhost:8001/)",
+      "Bash(.venv/bin/python -c \"import inspect; from starlette.templating import Jinja2Templates; t = Jinja2Templates\\(directory='.'\\); print\\(inspect.signature\\(t.TemplateResponse\\)\\)\")"
+    ]
+  }
+}

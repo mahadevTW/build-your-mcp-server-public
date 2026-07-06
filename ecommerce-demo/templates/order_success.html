@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Order Placed — ShopDemo{% endblock %}
+
+{% block content %}
+<div class="success-page">
+    <div class="success-animation">
+        <div class="success-circle">
+            <span class="success-check">✓</span>
+        </div>
+    </div>
+    <h1>Order Placed!</h1>
+    <p class="success-msg">Thank you! Your Cash on Delivery order has been placed successfully.</p>
+    <div class="success-info-box">
+        <span>💵</span>
+        <span>Pay when your order arrives at your door.</span>
+    </div>
+    <div class="success-actions">
+        <a href="/orders" class="btn btn-primary btn-large">View My Orders</a>
+        <a href="/" class="btn btn-outline btn-large">Continue Shopping</a>
+    </div>
+</div>
+{% endblock %}

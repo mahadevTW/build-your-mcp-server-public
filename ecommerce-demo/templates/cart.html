@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Cart — ShopDemo{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Your Cart</h1>
+    {% if cart_items %}<p class="page-subtitle">{{ cart_items|length }} item(s)</p>{% endif %}
+</div>
+
+{% if cart_items %}
+<div class="cart-layout">
+    <div class="cart-items">
+        {% for row in cart_items %}
+        <div class="cart-row">
+            <div class="cart-item-icon">{{ row.item.name[:1] }}</div>
+            <div class="cart-item-info">
+                <h3 class="cart-item-name">{{ row.item.name }}</h3>
+                <span class="category-badge">{{ row.item.category }}</span>
+                <p class="cart-item-unit">₹{{ "%.2f"|format(row.item.price) }} × {{ row.quantity }}</p>
+            </div>
+            <div class="cart-item-total">₹{{ "%.2f"|format(row.total) }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+        <h2 class="summary-title">Order Summary</h2>
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <span>₹{{ "%.2f"|format(grand_total) }}</span>
+        </div>
+        <div class="summary-row">
+            <span>Delivery</span>
+            <span class="free-tag">FREE</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row summary-total">
+            <span>Total</span>
+            <span>₹{{ "%.2f"|format(grand_total) }}</span>
+        </div>
+        <p class="cod-badge">💵 Cash on Delivery</p>
+        <form action="/cart/checkout" method="post">
+            <button type="submit" class="btn btn-success btn-large btn-full">Place Order</button>
+        </form>
+        <a href="/" class="btn-text-link">← Continue Shopping</a>
+    </div>
+</div>
+
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">🛒</div>
+    <h2>Your cart is empty</h2>
+    <p>Looks like you haven't added anything yet.</p>
+    <a href="/" class="btn btn-primary btn-large">Browse Products</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}ShopDemo{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="/" class="brand">
+                <span class="brand-icon">🛍</span> ShopDemo
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Products</a>
+                <a href="/cart" class="nav-link cart-link">
+                    <span class="nav-icon">🛒</span> Cart
+                </a>
+                <a href="/orders" class="nav-link orders-link">
+                    <span class="nav-icon">📦</span> Orders
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <span class="brand">🛍 ShopDemo</span>
+            <span>MCP Integration Demo — Powered by FastAPI</span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ item.name }} — ShopDemo{% endblock %}
+
+{% block content %}
+<a href="/" class="back-link">← Back to Products</a>
+
+<div class="product-detail-card">
+    <div class="product-detail-info">
+        <div class="detail-top">
+            <span class="category-badge category-badge-lg">{{ item.category }}</span>
+            <h1 class="product-detail-name">{{ item.name }}</h1>
+            <p class="product-detail-desc">{{ item.description }}</p>
+            <p class="product-detail-price">₹{{ "%.2f"|format(item.price) }}</p>
+        </div>
+
+        <div class="semantic-box">
+            <p class="semantic-label">About this item</p>
+            <p class="semantic-text">{{ item.semantic_description }}</p>
+        </div>
+
+        <div class="tag-row tag-row-lg">
+            {% for tag in item.tags_list %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+
+        <form action="/cart/add" method="post" class="add-to-cart-form">
+            <input type="hidden" name="item_id" value="{{ item.id }}" />
+            <div class="quantity-row">
+                <label for="quantity">Quantity</label>
+                <div class="qty-control">
+                    <button type="button" onclick="adj(-1)">−</button>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="99" />
+                    <button type="button" onclick="adj(1)">+</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large btn-full">
+                🛒 Add to Cart
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function adj(delta) {
+    const inp = document.getElementById('quantity');
+    inp.value = Math.max(1, Math.min(99, parseInt(inp.value || 1) + delta));
+}
+</script>
+{% endblock %}
