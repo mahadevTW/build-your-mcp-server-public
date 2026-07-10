@@ -3,3 +3,7 @@ uvicorn[standard]
 sqlalchemy
 jinja2
 python-multipart
+httpx
+fastmcp
+requests
+openai
