@@ -1,0 +1,13 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "python server.py"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+
+[variables]
+MCP_TRANSPORT = "http"
+# Set ECOMMERCE_BASE_URL in Railway dashboard after deploying ecommerce-demo
+# e.g. ECOMMERCE_BASE_URL = "https://your-ecommerce-demo.railway.app"
