@@ -34,6 +34,8 @@ Open http://localhost:8000 to verify the store is running.
 
 If all steps show `[OK]`, you are ready.
 
+## Below Steps will cover in workshop
+
 ## Step 2 — Register the MCP Server with Claude
 
 Open a **new terminal** and run once from the repo root:
