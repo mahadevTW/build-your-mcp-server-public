@@ -18,7 +18,15 @@
             <div class="order-meta">
                 <span class="order-payment">{{ order.payment_mode }}</span>
                 <span class="order-status-badge">Confirmed</span>
+                <span class="order-time">{{ order.created_at.strftime("%d %b %Y, %I:%M %p") }}</span>
             </div>
+            {% if order.items %}
+            <ul class="order-items-list">
+                {% for oi in order.items %}
+                <li>{{ oi.item_name }} × {{ oi.quantity }} — ₹{{ "%.2f"|format(oi.price * oi.quantity) }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </div>
         <div class="order-amount">
             <span class="order-label">Total</span>

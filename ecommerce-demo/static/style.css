@@ -524,7 +524,7 @@ a { text-decoration: none; color: inherit; }
 
 .order-card:hover { box-shadow: var(--shadow-hover); }
 
-.order-card-left { display: flex; align-items: center; gap: 1.2rem; }
+.order-card-left { display: flex; align-items: flex-start; gap: 1.2rem; }
 
 .order-id-badge {
     background: var(--dark);
@@ -551,6 +551,21 @@ a { text-decoration: none; color: inherit; }
     font-weight: 700;
     padding: .2rem .6rem;
     border-radius: 20px;
+}
+
+.order-time {
+    font-size: .8rem;
+    color: var(--muted);
+}
+
+.order-items-list {
+    margin: .5rem 0 0;
+    padding-left: 1.1rem;
+    font-size: .85rem;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
 }
 
 .order-amount { text-align: right; }

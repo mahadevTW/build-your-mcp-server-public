@@ -5,7 +5,7 @@ from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from database import engine, get_db, Base
-from models import Item, CartItem, Order
+from models import Item, CartItem, Order, OrderItem
 from schemas import (
     ItemSummary,
     ItemDetail,
@@ -40,6 +40,9 @@ def startup():
 # REST APIs
 # ---------------------------------------------------------------------------
 
+@app.get("/api/health")
+def health_check():
+    return {"status": "healthy"}
 
 @app.get("/api/items", response_model=list[ItemSummary])
 def list_items(
@@ -134,6 +137,19 @@ def place_order(db: Session = Depends(get_db)):
 
     order = Order(total_amount=grand_total, payment_mode="Cash on Delivery")
     db.add(order)
+    db.flush()
+    for ci in cart_items:
+        item = db.query(Item).filter(Item.id == ci.item_id).first()
+        if item:
+            db.add(
+                OrderItem(
+                    order_id=order.id,
+                    item_id=item.id,
+                    item_name=item.name,
+                    price=item.price,
+                    quantity=ci.quantity,
+                )
+            )
     db.query(CartItem).delete()
     db.commit()
     db.refresh(order)
@@ -219,6 +235,19 @@ def checkout(request: Request, db: Session = Depends(get_db)):
 
     order = Order(total_amount=grand_total, payment_mode="Cash on Delivery")
     db.add(order)
+    db.flush()
+    for ci in cart_items:
+        item = db.query(Item).filter(Item.id == ci.item_id).first()
+        if item:
+            db.add(
+                OrderItem(
+                    order_id=order.id,
+                    item_id=item.id,
+                    item_name=item.name,
+                    price=item.price,
+                    quantity=ci.quantity,
+                )
+            )
     db.query(CartItem).delete()
     db.commit()
     return RedirectResponse(url="/order-success", status_code=303)

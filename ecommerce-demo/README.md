@@ -293,15 +293,30 @@ GET /api/orders
   {
     "id": 3,
     "total_amount": 450.0,
-    "payment_mode": "Cash on Delivery"
+    "payment_mode": "Cash on Delivery",
+    "created_at": "2026-07-11T09:30:00.123456",
+    "items": [
+      { "item_name": "Eggs", "price": 90.0, "quantity": 2 },
+      { "item_name": "Peanut Butter", "price": 270.0, "quantity": 1 }
+    ]
   },
   {
     "id": 2,
     "total_amount": 640.0,
-    "payment_mode": "Cash on Delivery"
+    "payment_mode": "Cash on Delivery",
+    "created_at": "2026-07-10T18:05:12.654321",
+    "items": [
+      { "item_name": "Grapes", "price": 110.0, "quantity": 3 },
+      { "item_name": "Apple", "price": 120.0, "quantity": 1 }
+    ]
   }
 ]
 ```
+
+| Field         | Type   | Description |
+|---------------|--------|-------------|
+| `created_at`  | string | ISO 8601 timestamp of when the order was placed |
+| `items`       | array  | Line items in the order — `item_name`, `price` (unit price), `quantity` |
 
 Returns `[]` when no orders have been placed.
 

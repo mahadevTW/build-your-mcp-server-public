@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, field_validator
 from typing import List
 
@@ -64,10 +66,21 @@ class OrderResponse(BaseModel):
     total_amount: float
 
 
+class OrderItemResponse(BaseModel):
+    item_name: str
+    price: float
+    quantity: int
+
+    class Config:
+        from_attributes = True
+
+
 class OrderListItem(BaseModel):
     id: int
     total_amount: float
     payment_mode: str
+    created_at: datetime
+    items: List[OrderItemResponse]
 
     class Config:
         from_attributes = True
