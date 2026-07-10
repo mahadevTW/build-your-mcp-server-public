@@ -1,7 +1,7 @@
 @echo off
 :: setup.bat — One-shot setup for Windows (CMD or PowerShell)
 :: Run from repo root: setup.bat
-:: Assumes Python 3.10+ and Claude Code CLI are already installed.
+:: Requires Python 3.10+ and Node.js 18+. Installs Claude Code CLI if missing.
 
 setlocal EnableDelayedExpansion
 
@@ -34,7 +34,26 @@ if "!PYTHON!"=="" (
     exit /b 1
 )
 
-:: ── 2. Install ecommerce-demo deps ───────────────────────────────────────────
+:: ── 2. Check / Install Claude Code CLI ───────────────────────────────────────
+call claude --version >nul 2>&1
+set CLAUDE_OK=!errorlevel!
+if !CLAUDE_OK! neq 0 (
+    echo [..] Claude Code CLI not found. Installing...
+    call npm --version >nul 2>&1
+    if !errorlevel! neq 0 (
+        echo [FAIL] npm not found. Install Node.js 18+ from https://nodejs.org then re-run.
+        exit /b 1
+    )
+    call npm install -g @anthropic-ai/claude-code
+    call claude --version >nul 2>&1
+    if !errorlevel! neq 0 (
+        echo [FAIL] Claude Code CLI install failed. Try manually: npm install -g @anthropic-ai/claude-code
+        exit /b 1
+    )
+)
+echo [OK] Claude Code CLI ready
+
+:: ── 4. Install ecommerce-demo deps ───────────────────────────────────────────
 echo [..] Setting up ecommerce-demo...
 cd /d "%ECOM_DIR%"
 
@@ -46,7 +65,7 @@ if not exist ".venv" (
 .venv\Scripts\pip install -r requirements.txt -q
 echo [OK] ecommerce-demo dependencies installed
 
-:: ── 3. Install mcp-server deps ────────────────────────────────────────────────
+:: ── 5. Install mcp-server deps ────────────────────────────────────────────────
 echo [..] Setting up mcp-server...
 cd /d "%MCP_DIR%"
 
