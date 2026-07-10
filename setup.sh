@@ -36,14 +36,22 @@ if [ -z "$PYTHON" ]; then
   exit 1
 fi
 
-# ── 2. Check Claude Code CLI ──────────────────────────────────────────────────
+# ── 2. Check / Install Claude Code CLI ───────────────────────────────────────
 if command -v claude >/dev/null 2>&1; then
   echo "$OK Claude Code CLI: $(claude --version 2>/dev/null | head -1)"
 else
-  echo "$FAIL Claude Code CLI not found."
-  echo "     Install Node.js (https://nodejs.org) then run:"
-  echo "       npm install -g @anthropic-ai/claude-code"
-  exit 1
+  echo "$INFO Claude Code CLI not found. Installing..."
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "$FAIL npm not found. Install Node.js 18+ from https://nodejs.org then re-run."
+    exit 1
+  fi
+  npm install -g @anthropic-ai/claude-code
+  if command -v claude >/dev/null 2>&1; then
+    echo "$OK Claude Code CLI installed: $(claude --version 2>/dev/null | head -1)"
+  else
+    echo "$FAIL Claude Code CLI install failed. Try manually: npm install -g @anthropic-ai/claude-code"
+    exit 1
+  fi
 fi
 
 # ── Helper: resolve venv python/pip paths (Windows vs Unix) ───────────────────
